@@ -2,40 +2,28 @@ import java.io.*;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;  
 
 public class RegexEngine { 
     public static void main(String[] args) 
     {    
         boolean isFirstLine = true;
         // start reading input
-        try 
-        {              
-            BufferedReader bufferReader = new BufferedReader(new InputStreamReader(System.in));
-            
-            ExpScanner expScanner = new ExpScanner();
-
-            // while input is no ctrl-c
-            while ((bufferReader.readLine()) != null)
+                  
+        ExpScanner expScanner = new ExpScanner();
+        
+        try (Scanner scanner = new Scanner(System.in))
+        {
+            String RegexGrammar;
+            while (!(RegexGrammar = scanner.nextLine()).isEmpty()) 
             {
-                // String input_line;
-                // input_line = bufferReader.readLine();
-    
                 if (isFirstLine == true)
                 {   
-                    if (bufferReader.readLine().isEmpty())
-                    {
-                        System.out.println("Incorrect input format, input can only be a-Z, 0-9, |, *, +, bracket");
-                        System.exit(1);
-                    }
-                    expScanner.passFirstLine(bufferReader.readLine());
+                    expScanner.passFirstLine(RegexGrammar);
+                    isFirstLine = false;
                 }
-                isFirstLine = false;
             }
-        
-        } catch (IOException e) {
-            System.out.println("Engine stop.");
-            System.exit(1);
+
         } 
     }
 }

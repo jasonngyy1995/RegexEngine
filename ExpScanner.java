@@ -1,4 +1,7 @@
+import java.io.*;  
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class ExpScanner {
 
@@ -48,31 +51,28 @@ public class ExpScanner {
     {   
         boolean isOp, isAlp, isInt;
         for (char exp: firstInput.toCharArray())
-        {
+        {   
             isOp = checkOperator(exp);
             isAlp = checkAlphabet(exp);
             isInt = checkInt(exp);
 
-            if (isOp == false || isAlp == false || isInt == false)
+            if (isOp == true || isAlp == true || isInt == true)
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
-    
-    // check if bracket is complete
-
 
     // take the first line of input
-    void passFirstLine(String firstInput)
+    void passFirstLine(String firstLineInput)
     {   
         boolean res;
-        res = matchRule(firstInput);
+        res = matchRule(firstLineInput);
 
         if (res == false)
         {
-            System.out.println("Incorrect input format, input can only be a-Z, 0-9, |, *, +, bracket");
+            System.out.println("Incorrect input format, input can only be a-Z, 0-9, |, *, +, spaces, bracket");
             System.exit(1);
         } else {
             System.out.println("Ready");

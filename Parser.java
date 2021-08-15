@@ -1,50 +1,52 @@
+import java.io.*;  
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Parser {
 
-    private class exp_block 
-    {   
-        ArrayList<exp_block > point_back;
-        ArrayList<exp_block > point_next;
-    }
-
-    // store all blocks
-    ArrayList<exp_block > expressionTree;
-    
     // reg_exp ::= a single item of 'a-Z', '0-9', ' '
-    void parse_regExp()
+    ExpChild parse_character(String character)
     {
-
+        ExpChild newChild = new ExpChild(ChildType.CHARACTER, character);
+        return newChild;
     }
 
     // kleeneStar ::= reg_exp'*' | expInBracket'*'
-    void parse_kleeneStar()
+    ExpChild parse_kleeneStar(String character)
     {
-
+        ExpChild newChild = new ExpChild(ChildType.KSTAR, character);
+        return newChild;
     }
 
     // kleenePlus ::= reg_exp'+' | expInBracket'+'
-    void parse_kleenePlus()
+    ExpChild parse_kleenePlus(String character)
     {
-
+        ExpChild newChild = new ExpChild(ChildType.KPLUS, character);
+        return newChild;
     }
 
-    // ExpInBracket ::= '(' reg_exp | kleeneStar | kleenePlus ')'
-    void parse_ExpInBracket()
+    // ExpInBracket ::= '(' char | kleeneStar | kleenePlus ')'
+    ExpChild parse_ExpInBracket(String character)
     {
-
+        ExpChild newChild = new ExpChild(ChildType.BRACKET, character);
+        return newChild;
     }
 
-    // Alternator ::= reg_exp or expInBracket '|' reg_exp or expInBracket
-    void parse_Alternator()
+    // Alternator ::= char or charsInBracket '|' char or charsInBracket
+    ExpChild parse_Alternator(String character)
     {
-
+        // create alternator tree
+        ExpChild newChild = new ExpChild(ChildType.ALT, character);
+        return newChild;
     }
   
     // read next exp
-    void next_exp() 
+    void next_exp(String RegexGrammar) 
     {
-
+        for (int i = 0; i < RegexGrammar.length()-1; i++) {
+            
+        }
     }
     
    
