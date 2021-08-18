@@ -11,6 +11,7 @@ public class RegexEngine {
         // start reading input
                   
         ExpScanner expScanner = new ExpScanner();
+        Parser parser = new Parser();
         
         try (Scanner scanner = new Scanner(System.in))
         {
@@ -20,6 +21,7 @@ public class RegexEngine {
                 if (isFirstLine == true)
                 {   
                     expScanner.passFirstLine(RegexGrammar);
+                    parser.parse_regex(expScanner.regexInArrList);
                     isFirstLine = false;
                 }
             }

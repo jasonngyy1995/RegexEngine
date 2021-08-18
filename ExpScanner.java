@@ -5,6 +5,8 @@ import java.io.IOException;
 
 public class ExpScanner {
 
+    ArrayList<String> regexInArrList = new ArrayList<String>();
+
     // check if exp is an operator
     boolean checkOperator(char expression)
     {
@@ -70,12 +72,21 @@ public class ExpScanner {
         boolean res;
         res = matchRule(firstLineInput);
 
-        if (res == false)
-        {
+        if (res == true)
+        {   
+            System.out.println("Ready");
+
+            String[] tmp = firstLineInput.split("");
+            ArrayList<String> strInArrL = new ArrayList<String>();
+            for (int i = 0; i < tmp.length; i++)
+            {
+                strInArrL.add(tmp[i]);
+            }
+            regexInArrList = strInArrL;
+            
+        } else {
             System.out.println("Incorrect input format, input can only be a-Z, 0-9, |, *, +, spaces, bracket");
             System.exit(1);
-        } else {
-            System.out.println("Ready");
         }
     }
 }
