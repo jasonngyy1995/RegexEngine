@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ExpNodeCreator {
     
     // reg_exp ::= a single item of 'a-Z', '0-9', ' '
@@ -11,6 +13,7 @@ public class ExpNodeCreator {
     ExpNode create_zeroOrMore_node(String character)
     {
         ExpNode newNode = new ExpNode(NodeType.KSTAR, character);
+        newNode.children = new ArrayList<ExpNode>();
         return newNode;
     }
 
@@ -18,6 +21,7 @@ public class ExpNodeCreator {
     ExpNode create_oneOrMore_node(String character)
     {
         ExpNode newNode = new ExpNode(NodeType.KPLUS, character);
+        newNode.children = new ArrayList<ExpNode>();
         return newNode;
     }
 

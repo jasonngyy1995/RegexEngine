@@ -6,8 +6,8 @@ import java.io.IOException;
 public class Parser {
 
     ExpNodeCreator expNodeCreator = new ExpNodeCreator();
-    ExpScanner expScanner = new ExpScanner();
     int char_index = 0;
+    String current_char;
 
     ArrayList<ExpNode> grammarTree = new ArrayList<ExpNode> ();
     ArrayList<String> regexSeq = new ArrayList<String> ();
@@ -59,15 +59,8 @@ public class Parser {
     // create start node
     void create_start_node() 
     {
-        ExpNode start_state = new ExpNode(NodeType.START_STATE, "START_STATE");
+        ExpNode start_state = new ExpNode(NodeType.START_STATE, "START_NODE");
         grammarTree.add(start_state);
-    }
-
-    // create start node
-    void create_final_node() 
-    {
-        ExpNode final_state = new ExpNode(NodeType.FINAL_STATE, "FINAL_STATE");
-        grammarTree.add(final_state);
     }
     
     // bracket handling
@@ -133,25 +126,34 @@ public class Parser {
         targeted_list.add(newAltNode);
     }
 
+    // parse character
     void parse_character(String currentChar, ArrayList<ExpNode> targeted_list)
     {
+        // create a character node
         ExpNode newCharNode = expNodeCreator.create_character_node(currentChar);
 
+        // if this character is the end of expression
         if (char_index+1 == regexSeq.size())
         {
             targeted_list.add(newCharNode);
-            
+
+        // if kleenestar is found, create a kleenestar to which add the character node as a child
         } else if (have_kleenStar())
-        {   
-            ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(currentChar);
+        {
+            next_char();
+            current_char = regexSeq.get(char_index);
+            ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(current_char);
             newKleeneStarNode.children.add(newCharNode);
             targeted_list.add(newKleeneStarNode);
             // skip the star
             next_char();
 
+        // // if kleeneplus is found, create a kleeneplus to which add the character node as a child
         } else if (have_kleenPlus()) 
         {
-            ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(currentChar);
+            next_char();
+            current_char = regexSeq.get(char_index);
+            ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(current_char);
             newKleenePlusNode.children.add(newCharNode);
             targeted_list.add(newKleenePlusNode);
             // skip the plus
@@ -174,7 +176,7 @@ public class Parser {
         // }   
         while (char_index < regexSeq.size())
         {   
-            String current_char = regexSeq.get(char_index);
+            current_char = regexSeq.get(char_index);
             if (char_index == 0)
             {
                 create_start_node();
@@ -194,12 +196,11 @@ public class Parser {
             }
             next_char();
         }
-        
-        create_final_node();
-        // for (int i = 0; i < grammarTree.size(); i++)
-        // {
-        //     System.out.printf("%s ", grammarTree.get(i).exp);
-        // }   
+
+        for (int i = 0; i < grammarTree.size(); i++)
+        {
+            System.out.printf("%s ", grammarTree.get(i).exp);
+        }
     }
     
 }
