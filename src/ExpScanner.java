@@ -22,8 +22,6 @@ public class ExpScanner {
                 return true;
             case '*':
                 return true;
-            case ' ':
-                return true;
             default:
                 return false;
         }
@@ -32,7 +30,7 @@ public class ExpScanner {
     // check if exp is an alphabet
     boolean checkAlphabet(char exp)
     {
-        if ((exp >= 'a') || (exp <= 'z') || ((exp >= 'A') || (exp <= 'Z')))
+        if ((exp >= 'a' && exp <= 'z') || ((exp >= 'A' && exp <= 'Z')) || exp == ' ')
         {
             return true;
         }
@@ -58,17 +56,17 @@ public class ExpScanner {
             isAlp = checkAlphabet(exp);
             isInt = checkInt(exp);
 
-            if (isOp == true || isAlp == true || isInt == true)
+            if (isOp == false && isAlp == false && isInt == false)
             {
-                return true;
+               return false;
             }
         }
-        return false;
+        return true;
     }
 
     // take the first line of input
     void passFirstLine(String firstLineInput)
-    {   
+    {
         boolean res;
         res = matchRule(firstLineInput);
 

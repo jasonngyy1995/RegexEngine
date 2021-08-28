@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class ParserTest {
+public class Parser_Test {
     @Test
     public void testMustbe_characterOrOpenBracket()
     {

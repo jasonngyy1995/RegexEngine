@@ -21,7 +21,7 @@ public class RegexEngine {
                 if (isFirstLine == true)
                 {   
                     expScanner.passFirstLine(RegexGrammar);
-                    parser.parse_regex(expScanner.regexInArrList);
+                    parser.start_parsing(expScanner.regexInArrList);
                     isFirstLine = false;
                 }
             }

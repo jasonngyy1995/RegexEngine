@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 enum NodeType {
-    START_STATE,
-    FINAL_STATE,
+    REGEX,
     CHARACTER,
     ALT,
+    ALT_LEFT,
     KSTAR,
     KPLUS
 }
