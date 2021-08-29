@@ -6,7 +6,6 @@ public class Parser {
     int char_index = 0;
     String current_char;
 
-    ArrayList<ExpNode> tmpGrammarTree = new ArrayList<ExpNode> ();
     ArrayList<ExpNode> grammarTree = new ArrayList<ExpNode> ();
     ArrayList<String> regexSeq = new ArrayList<String> ();
 
@@ -58,7 +57,7 @@ public class Parser {
     }
 
     // bracket handling
-    void parse_bracket()
+    void parse_bracket(ArrayList<ExpNode> tmpGrammarTree)
     {
         ArrayList<ExpNode> tmpStrInBracket = new ArrayList<ExpNode> ();
 
@@ -93,27 +92,38 @@ public class Parser {
         // when close bracket read
         if ((regexSeq.get(char_index)).equals(")"))
         {
-            // skip close bracket and read if there "*" or "+" after bracket
-            next_char();
-            current_char = regexSeq.get(char_index);
-            if (current_char.equals("*"))
-            {   
-                ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(current_char);
-                newKleeneStarNode.children = tmpStrInBracket;
-                tmpGrammarTree.add(newKleeneStarNode);
-
-            } else if (current_char.equals("+"))
+            if (char_index == regexSeq.size() - 1)
             {
-                ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(current_char);
-                newKleenePlusNode.children = tmpStrInBracket;
-                tmpGrammarTree.add(newKleenePlusNode);
-
-            } else {
                 for (ExpNode node: tmpStrInBracket)
                 {
                     tmpGrammarTree.add(node);
                 }
             }
+            // skip close bracket and read if there "*" or "+" after bracket
+            else if (char_index < regexSeq.size())
+            {
+                next_char();
+                current_char = regexSeq.get(char_index);
+                if (current_char.equals("*"))
+                {
+                    ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(current_char);
+                    newKleeneStarNode.children = tmpStrInBracket;
+                    tmpGrammarTree.add(newKleeneStarNode);
+
+                } else if (current_char.equals("+"))
+                {
+                    ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(current_char);
+                    newKleenePlusNode.children = tmpStrInBracket;
+                    tmpGrammarTree.add(newKleenePlusNode);
+
+                } else {
+                    for (ExpNode node: tmpStrInBracket)
+                    {
+                        tmpGrammarTree.add(node);
+                    }
+                }
+            }
+
         }
 
     }
@@ -173,6 +183,7 @@ public class Parser {
     // read every exp
     ExpNode parse_regex()
     {
+        ArrayList<ExpNode> tmpGrammarTree = new ArrayList<ExpNode> ();
         while (char_index < regexSeq.size() && !(regexSeq.get(char_index).equals("|")))
         {
             current_char = regexSeq.get(char_index);
@@ -183,7 +194,7 @@ public class Parser {
             
             if (current_char.equals("("))
             {
-                parse_bracket();
+                parse_bracket(tmpGrammarTree);
 
             } else 
             {   
@@ -213,11 +224,11 @@ public class Parser {
         ExpNode regex_node = parse_regex();
         grammarTree.add(regex_node);
 
-//        for (int i = 0; i < regex_node.children.size(); i++)
-//        {
-////
-//            System.out.printf("%s ", regex_node.children.get(i).exp);
+        for (int i = 0; i < regex_node.children.size(); i++)
+        {
 //
+            System.out.printf("%s ", regex_node.children.get(i).exp);
+
 //            for (int j = 0; j < regex_node.children.size(); j++)
 //            {
 //                System.out.printf("%s ", regex_node.children.get(i).children.get(j).exp);
@@ -226,7 +237,7 @@ public class Parser {
 ////                    System.out.printf("%s ", grammarTree.get(i).children);
 ////                }
 //            }
-//        }
+        }
     }
     
 }
