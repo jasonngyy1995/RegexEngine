@@ -69,6 +69,7 @@ public class Parser {
         // until close bracket 
         while (!((regexSeq.get(char_index)).equals(")")))
         {
+            // get the character after the open bracket
             current_char = regexSeq.get(char_index);
             parse_character(current_char, tmpStrInBracket);
 
@@ -94,6 +95,12 @@ public class Parser {
         {
             if (char_index == regexSeq.size() - 1)
             {
+                // If the end of string inside bracket is not a "+" or "*", mark the most bottom child as the end of the branch of tree
+                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
+                {
+                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
+                }
+
                 for (ExpNode node: tmpStrInBracket)
                 {
                     tmpGrammarTree.add(node);
@@ -102,6 +109,12 @@ public class Parser {
             // skip close bracket and read if there "*" or "+" after bracket
             else if (char_index < regexSeq.size())
             {
+                // If the end of string inside bracket is not a "+" or "*", mark the most bottom child as the end of the branch of tree
+                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
+                {
+                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
+                }
+
                 next_char();
                 current_char = regexSeq.get(char_index);
                 if (current_char.equals("*"))
@@ -156,6 +169,8 @@ public class Parser {
         // if this character is the end of expression
         if (char_index+1 == regexSeq.size())
         {
+            // The end of regex, mark the most bottom child as the end of the branch of tree
+            newCharNode.haveChild = false;
             targeted_list.add(newCharNode);
 
         // if kleenestar is found, create a kleenestar to which add the character node as a child
@@ -163,6 +178,10 @@ public class Parser {
         {
             current_char = regexSeq.get(char_index);
             ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(current_char);
+
+            // Inside a "*", mark the most bottom child as the end of the branch of tree
+            newCharNode.haveChild = false;
+
             newKleeneStarNode.children.add(newCharNode);
             targeted_list.add(newKleeneStarNode);
 
@@ -171,6 +190,10 @@ public class Parser {
         {
             current_char = regexSeq.get(char_index);
             ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(current_char);
+
+            // Inside a "+", mark the most bottom child as the end of the branch of tree
+            newCharNode.haveChild = false;
+
             newKleenePlusNode.children.add(newCharNode);
             targeted_list.add(newKleenePlusNode);
 
@@ -206,6 +229,12 @@ public class Parser {
 
          if (char_index < regexSeq.size() && regexSeq.get(char_index).equals("|"))
          {
+             // if meets alternator, and the end of parsed regex is not "+" or "*", mark the most bottom child as the end of the branch of tree
+             if (!tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("+") || !tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("*"))
+             {
+                 tmpGrammarTree.get(tmpGrammarTree.size()-1).haveChild = false;
+             }
+
              ExpNode alt = parse_alternator(tmpGrammarTree);
              return alt;
          }
@@ -224,10 +253,10 @@ public class Parser {
         ExpNode regex_node = parse_regex();
         grammarTree.add(regex_node);
 
-        for (int i = 0; i < regex_node.children.size(); i++)
-        {
-//
-            System.out.printf("%s ", regex_node.children.get(i).exp);
+//        for (int i = 0; i < regex_node.children.size(); i++)
+//        {
+////
+//            System.out.printf("%s ", regex_node.children.get(i).exp);
 
 //            for (int j = 0; j < regex_node.children.size(); j++)
 //            {
@@ -237,7 +266,7 @@ public class Parser {
 ////                    System.out.printf("%s ", grammarTree.get(i).children);
 ////                }
 //            }
-        }
+        //}
     }
     
 }

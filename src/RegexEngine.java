@@ -1,8 +1,5 @@
-import java.io.*;  
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Scanner;  
+import java.util.Scanner;
 
 public class RegexEngine { 
     public static void main(String[] args) 
@@ -28,7 +25,6 @@ public class RegexEngine {
                     parser.start_parsing(passed_regex);
                     parsing_tree = parser.grammarTree;
 
-                    TableCreator tableCreator = new TableCreator(parsing_tree, passed_regex);
                     isFirstLine = false;
                 }
 

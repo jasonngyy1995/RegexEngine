@@ -13,6 +13,7 @@ public class Parser_Test {
     @Test
     public void testBasic()
     {
+        // ab
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("b");
@@ -28,6 +29,7 @@ public class Parser_Test {
     @Test
     public void testBasicWithStar()
     {
+        // ab*
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("b");
@@ -45,6 +47,7 @@ public class Parser_Test {
     @Test
     public void testBasicWithPlus()
     {
+        // 1 +
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("1");
         test_list.add(" ");
@@ -62,6 +65,7 @@ public class Parser_Test {
     @Test
     public void testBracket()
     {
+        // ab(cd)
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("b");
@@ -83,6 +87,7 @@ public class Parser_Test {
     @Test
     public void testBracketWithStar()
     {
+        // ab(cd)*
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("b");
@@ -107,6 +112,7 @@ public class Parser_Test {
     @Test
     public void testBracketWithPlus()
     {
+        // ab(cd)+
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("b");
@@ -131,6 +137,7 @@ public class Parser_Test {
     @Test
     public void testBasicAlt()
     {
+        // a|b
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("|");
@@ -150,6 +157,7 @@ public class Parser_Test {
     @Test
     public void testTwoAlt()
     {
+        // a|b|c
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("a");
         test_list.add("|");
@@ -173,7 +181,8 @@ public class Parser_Test {
     }
 
     @Test
-    public void testExampleCase() {
+    public void testExampleCase()
+    {
         // (ab)*|c+
         ArrayList<String> test_list = new ArrayList<String>();
         test_list.add("(");
@@ -197,6 +206,36 @@ public class Parser_Test {
         assertEquals(parser.grammarTree.get(0).children.get(1).exp,"REGEX" );
         assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).exp,"+" );
         assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).exp,"c" );
+    }
+
+    @Test
+    public void testEndOfBranch()
+    {
+        // (ab)*|c+
+        ArrayList<String> test_list = new ArrayList<String>();
+        test_list.add("(");
+        test_list.add("a");
+        test_list.add("b");
+        test_list.add(")");
+        test_list.add("*");
+        test_list.add("|");
+        test_list.add("c");
+        test_list.add("+");
+
+        parser.start_parsing(test_list);
+
+
+        assertEquals(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(0).exp,"a" );
+        assertTrue(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(0).haveChild);
+
+        assertEquals(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(1).exp,"b" );
+        assertFalse(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(1).haveChild);
+
+        assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).exp,"+" );
+        assertTrue(parser.grammarTree.get(0).children.get(1).children.get(0).haveChild);
+
+        assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).exp,"c" );
+        assertFalse(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).haveChild);
     }
 
 }

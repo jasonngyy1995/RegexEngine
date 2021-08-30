@@ -17,6 +17,7 @@ public class ExpNode
     NodeType nodeType;
     String exp;
     ArrayList<ExpNode> children;
+    boolean haveChild = true;
 
     ExpNode(NodeType type_name, String exp_str)
     {
