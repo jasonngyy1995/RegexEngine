@@ -9,5 +9,10 @@ public class Transition
         this.next_state = next_state;
     }
 
+    void setTransNextState(State next_state)
+    {
+        this.next_state = next_state;
+    }
+
 }
 

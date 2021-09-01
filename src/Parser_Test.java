@@ -208,34 +208,4 @@ public class Parser_Test {
         assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).exp,"c" );
     }
 
-    @Test
-    public void testEndOfBranch()
-    {
-        // (ab)*|c+
-        ArrayList<String> test_list = new ArrayList<String>();
-        test_list.add("(");
-        test_list.add("a");
-        test_list.add("b");
-        test_list.add(")");
-        test_list.add("*");
-        test_list.add("|");
-        test_list.add("c");
-        test_list.add("+");
-
-        parser.start_parsing(test_list);
-
-
-        assertEquals(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(0).exp,"a" );
-        assertTrue(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(0).haveChild);
-
-        assertEquals(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(1).exp,"b" );
-        assertFalse(parser.grammarTree.get(0).children.get(0).children.get(0).children.get(1).haveChild);
-
-        assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).exp,"+" );
-        assertTrue(parser.grammarTree.get(0).children.get(1).children.get(0).haveChild);
-
-        assertEquals(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).exp,"c" );
-        assertFalse(parser.grammarTree.get(0).children.get(1).children.get(0).children.get(0).haveChild);
-    }
-
 }

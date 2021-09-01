@@ -95,11 +95,11 @@ public class Parser {
         {
             if (char_index == regexSeq.size() - 1)
             {
-                // If the end of string inside bracket is not a "+" or "*", mark the most bottom child as the end of the branch of tree
-                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
-                {
-                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
-                }
+//                // If the end of string inside bracket is not a "+" or "*", mark the most bottom child as the end of the branch of tree
+//                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
+//                {
+//                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
+//                }
 
                 for (ExpNode node: tmpStrInBracket)
                 {
@@ -110,10 +110,10 @@ public class Parser {
             else if (char_index < regexSeq.size())
             {
                 // If the end of string inside bracket is not a "+" or "*", mark the most bottom child as the end of the branch of tree
-                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
-                {
-                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
-                }
+//                if (!tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("+") || !tmpStrInBracket.get(tmpStrInBracket.size()-1).exp.equals("*"))
+//                {
+//                    tmpStrInBracket.get(tmpStrInBracket.size()-1).haveChild = false;
+//                }
 
                 next_char();
                 current_char = regexSeq.get(char_index);
@@ -170,7 +170,7 @@ public class Parser {
         if (char_index+1 == regexSeq.size())
         {
             // The end of regex, mark the most bottom child as the end of the branch of tree
-            newCharNode.haveChild = false;
+//            newCharNode.haveChild = false;
             targeted_list.add(newCharNode);
 
         // if kleenestar is found, create a kleenestar to which add the character node as a child
@@ -180,7 +180,7 @@ public class Parser {
             ExpNode newKleeneStarNode = expNodeCreator.create_zeroOrMore_node(current_char);
 
             // Inside a "*", mark the most bottom child as the end of the branch of tree
-            newCharNode.haveChild = false;
+//            newCharNode.haveChild = false;
 
             newKleeneStarNode.children.add(newCharNode);
             targeted_list.add(newKleeneStarNode);
@@ -192,7 +192,7 @@ public class Parser {
             ExpNode newKleenePlusNode = expNodeCreator.create_oneOrMore_node(current_char);
 
             // Inside a "+", mark the most bottom child as the end of the branch of tree
-            newCharNode.haveChild = false;
+//            newCharNode.haveChild = false;
 
             newKleenePlusNode.children.add(newCharNode);
             targeted_list.add(newKleenePlusNode);
@@ -230,10 +230,10 @@ public class Parser {
          if (char_index < regexSeq.size() && regexSeq.get(char_index).equals("|"))
          {
              // if meets alternator, and the end of parsed regex is not "+" or "*", mark the most bottom child as the end of the branch of tree
-             if (!tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("+") || !tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("*"))
-             {
-                 tmpGrammarTree.get(tmpGrammarTree.size()-1).haveChild = false;
-             }
+//             if (!tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("+") || !tmpGrammarTree.get(tmpGrammarTree.size()-1).exp.equals("*"))
+//             {
+//                 tmpGrammarTree.get(tmpGrammarTree.size()-1).haveChild = false;
+//             }
 
              ExpNode alt = parse_alternator(tmpGrammarTree);
              return alt;
@@ -253,20 +253,6 @@ public class Parser {
         ExpNode regex_node = parse_regex();
         grammarTree.add(regex_node);
 
-//        for (int i = 0; i < regex_node.children.size(); i++)
-//        {
-////
-//            System.out.printf("%s ", regex_node.children.get(i).exp);
-
-//            for (int j = 0; j < regex_node.children.size(); j++)
-//            {
-//                System.out.printf("%s ", regex_node.children.get(i).children.get(j).exp);
-////                if (grammarTree.get(i).exp.equals("*") || grammarTree.get(i).exp.equals("+"))
-////                {
-////                    System.out.printf("%s ", grammarTree.get(i).children);
-////                }
-//            }
-        //}
     }
     
 }

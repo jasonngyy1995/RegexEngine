@@ -25,6 +25,9 @@ public class RegexEngine {
                     parser.start_parsing(passed_regex);
                     parsing_tree = parser.grammarTree;
 
+                    ENFAGraphCreator enfaGraphCreator = new ENFAGraphCreator(passed_regex);
+                    enfaGraphCreator.check_tree_type(parsing_tree);
+
                     isFirstLine = false;
                 }
 
