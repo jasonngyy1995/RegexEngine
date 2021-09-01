@@ -21,6 +21,11 @@ public class State
         this.id = id;
     }
 
+    int getStateId()
+    {
+        return this.id;
+    }
+
     void setTrans_exp(String tr)
     {
         this.trans_exp = tr;
