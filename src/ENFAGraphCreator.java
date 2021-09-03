@@ -28,7 +28,7 @@ public class ENFAGraphCreator
         this.regex = regex;
     }
 
-    TablePrinter tablePrinter = new TablePrinter();
+    TableConverter tableConverter = new TableConverter();
 
     // function to create a start state
     State create_start_state()
@@ -229,7 +229,7 @@ public class ENFAGraphCreator
             states_list = graph.getStatesList();
         }
         // convert states list to an e-nfa table
-        ArrayList<ArrayList<String>> tmp = tablePrinter.create_table(graph, regex);
+        ArrayList<ArrayList<String>> tmp = tableConverter.create_table(graph, regex);
 
         return tmp;
     }

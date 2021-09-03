@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class TablePrinter
+public class TableConverter
 {
     // get the first row of the table
     ArrayList<String> get_first_row(ArrayList<String> regex)

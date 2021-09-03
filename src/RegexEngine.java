@@ -41,7 +41,7 @@ public class RegexEngine
         {
             if (isFirstLine == true && verbose_mode == true)
             {
-                System.out.println("");
+                System.out.println();
             }
 
             String input = scanner.nextLine();
