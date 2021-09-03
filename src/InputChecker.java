@@ -20,10 +20,12 @@ public class InputChecker
     // function to get state with epsilon transition
     ArrayList<State> searchStateWithEpsilonTransition(State current_state)
     {
+        // the list which has the most updated state with epsilon transition
         ArrayList<State> newList_of_epsilonState = new ArrayList<State>();
         ArrayList<State> StateWithEpsilonTransition = current_state.get_inputMatched_next_state("epsilon");
         for (State state: StateWithEpsilonTransition)
         {
+            // if not existed, add to the new list
             if (check_if_state_exist(state) == false)
             {
                 newList_of_epsilonState.add(state);
@@ -75,6 +77,7 @@ public class InputChecker
     {
         for (int i = available_states.size()-1; i>=0; i--)
         {
+            // check if input matches the transition function
             if (available_states.get(i).get_acceptedInput().contains(str_input))
             {
                 ArrayList<Transition> tmp_tran = available_states.get(i).transitions;
@@ -86,6 +89,7 @@ public class InputChecker
                     }
                 }
             }
+            // kill states of last state
             available_states.remove(i);
         }
         add_StateWithEpsilonTransition_to_available();
