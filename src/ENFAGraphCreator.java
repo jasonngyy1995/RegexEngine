@@ -90,9 +90,11 @@ public class ENFAGraphCreator
                 newState.setTrans_exp("epsilon");
                 newState.addTo_acceptedInput("epsilon");
                 id++;
+
                 // a transition of pointing itself
                 Transition toSelf = new Transition(scanning_node.children.get(0).exp, newState);
                 newState.add_trans_func(toSelf);
+                newState.addTo_acceptedInput(scanning_node.children.get(0).exp);
                 graph.statesList.add(newState);
 
             } else if (scanning_node.nodeType == NodeType.KPLUS)
