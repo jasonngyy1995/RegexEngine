@@ -25,8 +25,8 @@ public class ExpScanner_Test {
         assertTrue(expScanner.checkAlphabet('Z'));
         assertTrue(expScanner.checkAlphabet(' '));
 
-//        assertFalse(expScanner.checkAlphabet('&'));
-//        assertFalse(expScanner.checkAlphabet('-'));
+        assertFalse(expScanner.checkAlphabet('&'));
+        assertFalse(expScanner.checkAlphabet('-'));
     }
 
     @Test

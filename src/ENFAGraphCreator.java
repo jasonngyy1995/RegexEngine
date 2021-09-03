@@ -95,23 +95,6 @@ public class ENFAGraphCreator
                 newState.add_trans_func(toSelf);
                 graph.statesList.add(newState);
 
-//                State newState = new State(id);
-//                newState.setTrans_exp("epsilon");
-//                newState.addTo_acceptedInput("epsilon");
-//                id++;
-//
-//                State backToSelf = new State(id);
-//                System.out.println("test "+backToSelf.getStateId());
-//                backToSelf.setTrans_exp("epsilon");
-//                backToSelf.addTo_acceptedInput("epsilon");
-//                id++;
-//
-//                // a transition of pointing itself
-//                Transition toSelf = new Transition(scanning_node.children.get(0).exp, backToSelf);
-//                newState.add_trans_func(toSelf);
-//                graph.statesList.add(newState);
-//                graph.statesList.add(backToSelf);
-
             } else if (scanning_node.nodeType == NodeType.KPLUS)
             {
                 // create a state before
@@ -249,11 +232,13 @@ public class ENFAGraphCreator
         return tmp;
     }
 
+    // function to get accepting states from state list
     int return_accepting_state()
     {
         return states_list.get(states_list.size()-1).getStateId();
     }
 
+    // function to print the e-nfa table
     void print_table(ArrayList<ArrayList<String>> table)
     {
         for (int i = 0; i < table.size(); i++)

@@ -4,6 +4,7 @@ public class InputChecker
 {
     ArrayList<State> available_states = new ArrayList<State>();
 
+    // function to check if the state already exists in available_states
     boolean check_if_state_exist(State state)
     {
         for (State existing_state: this.available_states)
@@ -16,6 +17,7 @@ public class InputChecker
         return false;
     }
 
+    // function to get state with epsilon transition
     ArrayList<State> searchStateWithEpsilonTransition(State current_state)
     {
         ArrayList<State> newList_of_epsilonState = new ArrayList<State>();
@@ -30,6 +32,7 @@ public class InputChecker
         return newList_of_epsilonState;
     }
 
+    // function to add all states with epsilon transition to available_states
     void add_StateWithEpsilonTransition_to_available()
     {
         ArrayList<State> StateWithEpsilon = new ArrayList<State>();
@@ -41,6 +44,7 @@ public class InputChecker
             this.available_states.addAll(epsilonTransition_from_currentAvailableState);
         }
 
+        // check if above returned states have epsilon transition as well
         while (StateWithEpsilon.size() > 0)
         {
             ArrayList<State> previous_state_with_epsilon = StateWithEpsilon;
@@ -57,6 +61,7 @@ public class InputChecker
         }
     }
 
+    // start input checking and creating available_states at the start state
     void init_available_state(State init_state)
     {
         this.available_states = new ArrayList<State>();
@@ -65,6 +70,7 @@ public class InputChecker
         add_StateWithEpsilonTransition_to_available();
     }
 
+    // update the available_states when processing input
     void get_available_states(String str_input)
     {
         for (int i = available_states.size()-1; i>=0; i--)
@@ -85,8 +91,10 @@ public class InputChecker
         add_StateWithEpsilonTransition_to_available();
     }
 
+    // to check if the current available state transits to the accepting state
     boolean reachAcceptingState(String str_input, int accepting_state_id, State init_state)
     {
+        // when "enter" button with no string input
         if (str_input.equals(""))
         {
             init_available_state(init_state);
@@ -104,8 +112,4 @@ public class InputChecker
         }
         return false;
     }
-
-
-
-
 }
