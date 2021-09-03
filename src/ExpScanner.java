@@ -71,9 +71,7 @@ public class ExpScanner {
         res = matchRule(firstLineInput);
 
         if (res == true)
-        {   
-            System.out.println("Ready");
-
+        {
             String[] tmp = firstLineInput.split("");
             ArrayList<String> strInArrL = new ArrayList<String>();
             for (int i = 0; i < tmp.length; i++)
