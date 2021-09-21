@@ -33,7 +33,12 @@ public class RegexEngine
 
         ENFAGraphCreator enfaGraphCreator = new ENFAGraphCreator(passed_regex);
         eNfa_table = enfaGraphCreator.table_converter(parsing_tree);
-        enfaGraphCreator.print_table(eNfa_table);
+
+        if (verbose_mode == true)
+        {
+            enfaGraphCreator.print_table(eNfa_table);
+        }
+
         states_list = enfaGraphCreator.states_list;
         int accepting_state_id = enfaGraphCreator.return_accepting_state();
 
@@ -42,6 +47,11 @@ public class RegexEngine
             if (isFirstLine == true && verbose_mode == true)
             {
                 System.out.println();
+            }
+
+            if (isFirstLine == true)
+            {
+                System.out.println("Ready");
             }
 
             String input = scanner.nextLine();
